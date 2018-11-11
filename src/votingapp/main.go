@@ -24,7 +24,7 @@ func main() {
 	e.DELETE(api, log(finishVoting))
 	e.GET("/ws", log(serveWs))
 
-	e.Logger.Fatal(e.Start(fmt.Sprintf(":%v", getenv("VOTINGAPP_PORT", "8080"))))
+	e.Logger.Fatal(e.Start(fmt.Sprintf(":%v", getenv("VOTINGAPP_PORT", "80"))))
 }
 
 func sendMessage(value interface{}) error {

@@ -1,0 +1,26 @@
+version: "3.4"
+
+services:
+  reverse-proxy:
+    image: votingapp-proxy 
+    build:
+      context: ./nginx
+    ports:
+      - 8080:80
+
+  votingapp:
+    image: ${REGISTRY:-paulopez}/votingapp
+    build:
+      context: ./src/votingapp-redis
+    environment: 
+      REDIS: cache:6379
+
+  votingapp-test:
+    image: votingapp-test
+    build:
+      context: ./test
+    environment: 
+      VOTING_URL: http://votingapp/vote
+
+  cache:
+    image: redis
