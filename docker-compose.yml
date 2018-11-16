@@ -17,4 +17,4 @@ services:
     build:
       context: ./test
     environment: 
-      VOTING_URL: http://votingapp:8080/vote
+      VOTING_URL: http://votingapp/vote
