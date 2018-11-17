@@ -4,7 +4,7 @@ services:
   votingapp:
     image: ${REGISTRY:-paulopez}/votingapp
     build:
-      context: ./src/votingapp-redis
+      context: ./src/votingapp
       dockerfile: Dockerfile
     environment: 
       REDIS: database:6379
