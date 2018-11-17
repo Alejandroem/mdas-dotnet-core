@@ -1,15 +1,15 @@
 # BUILDER
-FROM golang:stretch AS builder
-RUN apt-get update && apt-get install -y git 
+FROM golang:alpine AS builder
+RUN apk update && apk add git 
 
 COPY deps.sh . 
-RUN bash -c './deps.sh'
+RUN sh -c './deps.sh'
 
 COPY . .
 RUN go build -o /deploy/votingapp && cp -r ui /deploy
 
 # RUNTIME
-FROM ubuntu:18.04
+FROM alpine
 WORKDIR /app
 COPY --from=builder /deploy .
 ENTRYPOINT [ "./votingapp" ]
