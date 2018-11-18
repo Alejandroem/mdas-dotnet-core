@@ -1,19 +1,23 @@
 import requests
 import os
+from retry import retry
 
 api = os.getenv('VOTING_URL', "http://localhost:8080/vote")
 
 
+@retry(Exception, tries=3, delay=5, backoff=2)
 def start_voting(options):
     r = requests.post(api, json={'topics': options})
     return r.json()
 
 
+@retry(Exception, tries=3, delay=5, backoff=2)
 def vote(option):
     r = requests.put(api, json={'topic': option})
     return r.json()
 
 
+@retry(Exception, tries=3, delay=5, backoff=2)
 def finish_voting():
     r = requests.delete(api)
     return r.json()

@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile
     environment: 
       REDIS: database:6379
+    ports:
+      - 8080:80
 
   database:
     image: redis

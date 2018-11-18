@@ -12,4 +12,4 @@ RUN go build -o /deploy/votingapp && cp -r ui /deploy
 FROM alpine
 WORKDIR /app
 COPY --from=builder /deploy .
-ENTRYPOINT [ "./votingapp" ]
+ENTRYPOINT [ "sh", "-c", "sleep 10 && ./votingapp" ]
