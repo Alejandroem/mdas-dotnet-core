@@ -4,3 +4,5 @@ error
 log
 */parameters.json
 secrets
+bin
+obj
