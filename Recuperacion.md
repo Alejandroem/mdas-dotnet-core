@@ -17,3 +17,5 @@ Dockeriza, reescribiendo el anterior Dockerfile `./test/Dockerfile`, los tests r
 ## Pipeline con docker compose 
 Verifica que la aplicación funciona correctamente pasando los test de integración usando docker compose y las imágenes de docker creadas en los puntos anteriores.
 
+### Entrega
+Se entrega en repo privado de git (github, bitbucket, gitlab,...)
