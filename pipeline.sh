@@ -1,25 +1,24 @@
-votingappPath='./src/votingapp'
+votingappPath='./src/votingapp-dotnet'
 
 build(){
   pushd $votingappPath
-  ./deps.sh
   rm -rf ./deploy
-  (go build -o ./deploy/votingapp && cp -r ui ./deploy) || return 1
+  dotnet build -o ./deploy/votingapp || return 1
   popd
 }
 
 run(){
-  app='votingapp'
+  app='dotnet'
   pushd $votingappPath
   pid=$(ps | grep $app | awk '{ print $1 }' | head -1)
   kill -9 $pid || true
-  ./deploy/$app &
+  dotnet bin/Debug/netcoreapp2.2/VotingApp.dll &
   popd
 }
 
 test(){
   http_client(){
-    curl --url 'http://localhost:8080/vote' \
+    curl --url 'http://localhost:5000/vote' \
       --request $1 \
       --data "$2" \
       --header 'Content-Type: application/json' \
