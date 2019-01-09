@@ -14,28 +14,36 @@ run(){
   kill -9 $pid || true
   dotnet bin/Debug/netcoreapp2.2/VotingApp.dll &
   popd
+  sleep 3
 }
 
 test(){
   http_client(){
-    curl --url 'http://localhost:5000/vote' \
+    curl --url 'http://localhost:5000/api/voting' \
       --request $1 \
       --data "$2" \
-      --header 'Content-Type: application/json' \
-      --silent
+      --header 'Content-Type: application/json'
   }
 
-  topics='{"topics":["bash","python","go"]}' 
+  topics='["bash","python","go"]'
   expectedWinner='bash'
   echo "Given voting topics $topics, When vote for $options, Then winner is $expectedWinner"
 
   http_client POST $topics
-  for option in bash bash bash python
-  do
-    http_client PUT '{"topic":"'$option'"}'
-  done
-  winner=$(http_client DELETE | jq -r '.winner')
+  echo "Voting started"
 
+  http_client PUT '"bash"'
+  http_client PUT '"bash"'
+  http_client PUT '"bash"'
+  http_client PUT '"python"'
+
+  echo "Voting done"
+  
+  winner=$(http_client DELETE | jq -r '.winner')
+  echo "Voting finished"
+
+  echo $expectedWinner
+  echo $winner
   if [ "$expectedWinner" = "$winner" ]; then
     return 0
   else 

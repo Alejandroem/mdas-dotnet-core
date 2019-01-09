@@ -26,7 +26,9 @@ namespace VotingApp.Api
 
         [HttpPost]
         public async Task<object> Start([FromBody]string[] topics) =>
-            await ExecuteCommand(() => _voting.Start(topics));
+            await ExecuteCommand(() => {
+                 _voting.Start(topics);
+                });
 
         [HttpPut]
         public async Task<object> Vote([FromBody]string topic) =>
