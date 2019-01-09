@@ -1,7 +1,11 @@
-FROM python:alpine
+FROM node:8
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY test.py .
+WORKDIR /app
 
-ENTRYPOINT [ "python", "test.py" ]
+COPY package*.json ./
+
+RUN npm install
+
+COPY test.js /app
+
+ENTRYPOINT ["node", "index.js"]
